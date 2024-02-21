@@ -1,9 +1,12 @@
+#first we do all the imports neede to perform the task
 from flask import Flask , request , jsonify
 import mysql.connector as conn
 mydb = conn.connect(host="localhost",user="root",passwd="@Gmgaurav7")
 cursor = mydb.cursor()
 
 app = Flask(__name__)
+
+#below is the program to insert a data into a given sql database using flask api
 @app.route("/insert",methods=['POST'])
 def insert_data():
     if request.method == "POST":
@@ -14,7 +17,7 @@ def insert_data():
         return jsonify(str("Inserted Successfully"))
 
 
-
+#below is the program to update data into a given sql database using flask api
 @app.route('/update',methods = ['POST'])
 def update_data():
     if request.method == 'POST':
@@ -24,6 +27,7 @@ def update_data():
         mydb.commit()
         return jsonify(str("Updated Successfully"))
 
+#below is the program to delete a data into a given sql database using flask api
 @app.route('/delete', methods=['POST'])
 def delete_entry():
     if request.method == 'POST':
@@ -32,6 +36,7 @@ def delete_entry():
         mydb.commit()
         return jsonify(str("Successfully Deleted"))
 
+#below is the program to fetch the data available in given sql database using flask api
 @app.route('/fetch', methods=['POST'])
 def fetch_data():
     if request.method == 'POST':
@@ -41,6 +46,6 @@ def fetch_data():
             l.append(i)
         return jsonify(str(l))
 
-
+#below code is used for running the flask app it Starts the Flask web server if the script is executed directly.
 if __name__ == "__main__":
     app.run()

@@ -24,6 +24,23 @@ def update_data():
         mydb.commit()
         return jsonify(str("Updated Successfully"))
 
+@app.route('/delete', methods=['POST'])
+def delete_entry():
+    if request.method == 'POST':
+        del_name = request.json['del_name']
+        cursor.execute("delete from mysqltask.mysqltable where name = %s " , (del_name ,))
+        mydb.commit()
+        return jsonify(str("Successfully Deleted"))
+
+@app.route('/fetch', methods=['POST'])
+def fetch_data():
+    if request.method == 'POST':
+        cursor.execute("select * from mysqltask.mysqltable")
+        l = []
+        for i in cursor.fetchall():
+            l.append(i)
+        return jsonify(str(l))
+
 
 if __name__ == "__main__":
     app.run()

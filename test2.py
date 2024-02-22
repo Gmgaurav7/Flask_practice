@@ -14,6 +14,8 @@ def get_data():
         cur = con.cursor()
         cur.execute("select * from {}".format(tn))
         data = cur.fetchall()
+        con.commit()
+        con.close()
     except Exception as e:
         return jsonify(str(e))
     return jsonify(str(data))
